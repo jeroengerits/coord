@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-use Jeroengerits\Coord\Enums\DistanceUnit;
-use Jeroengerits\Coord\Exceptions\InvalidCoordinatesException;
-use Jeroengerits\Coord\ValueObjects\Coordinates;
-use Jeroengerits\Coord\ValueObjects\Latitude;
-use Jeroengerits\Coord\ValueObjects\Longitude;
+use JeroenGerits\Coord\Enums\DistanceUnit;
+use JeroenGerits\Coord\Exceptions\InvalidCoordinatesException;
+use JeroenGerits\Coord\ValueObjects\Coordinates;
+use JeroenGerits\Coord\ValueObjects\Latitude;
+use JeroenGerits\Coord\ValueObjects\Longitude;
 
 it('creates coordinates with latitude and longitude', function (): void {
     $latitude = new Latitude(40.7128);
@@ -20,8 +20,8 @@ it('creates coordinates with latitude and longitude', function (): void {
 it('creates coordinates from float values', function (): void {
     $coordinates = Coordinates::fromFloats(40.7128, -74.0060);
 
-    expect($coordinates->latitude()->value())->toBe(40.7128)
-        ->and($coordinates->longitude()->value())->toBe(-74.0060);
+    expect($coordinates->latitude()->value)->toBe(40.7128)
+        ->and($coordinates->longitude()->value)->toBe(-74.0060);
 });
 
 it('creates coordinates from array', function (): void {
@@ -30,8 +30,8 @@ it('creates coordinates from array', function (): void {
         'longitude' => -74.0060,
     ]);
 
-    expect($coordinates->latitude()->value())->toBe(40.7128)
-        ->and($coordinates->longitude()->value())->toBe(-74.0060);
+    expect($coordinates->latitude()->value)->toBe(40.7128)
+        ->and($coordinates->longitude()->value)->toBe(-74.0060);
 });
 
 it('throws exception when creating from array with missing latitude', function (): void {
@@ -47,15 +47,15 @@ it('throws exception when creating from array with missing longitude', function 
 it('creates coordinates from string', function (): void {
     $coordinates = Coordinates::fromString('40.7128,-74.0060');
 
-    expect($coordinates->latitude()->value())->toBe(40.7128)
-        ->and($coordinates->longitude()->value())->toBe(-74.0060);
+    expect($coordinates->latitude()->value)->toBe(40.7128)
+        ->and($coordinates->longitude()->value)->toBe(-74.0060);
 });
 
 it('creates coordinates from string with space after comma', function (): void {
     $coordinates = Coordinates::fromString('40.7128, -74.0060');
 
-    expect($coordinates->latitude()->value())->toBe(40.7128)
-        ->and($coordinates->longitude()->value())->toBe(-74.0060);
+    expect($coordinates->latitude()->value)->toBe(40.7128)
+        ->and($coordinates->longitude()->value)->toBe(-74.0060);
 });
 
 it('throws exception when creating from invalid string format', function (): void {

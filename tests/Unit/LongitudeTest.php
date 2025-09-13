@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-use Jeroengerits\Coord\Exceptions\InvalidLongitudeException;
-use Jeroengerits\Coord\ValueObjects\Longitude;
+use JeroenGerits\Coord\Exceptions\InvalidLongitudeException;
+use JeroenGerits\Coord\ValueObjects\Longitude;
 
 it('creates a valid longitude', function (): void {
     $longitude = new Longitude(-74.0060);
 
-    expect($longitude->value())->toBe(-74.0060);
+    expect($longitude->value)->toBe(-74.0060);
 });
 
 it('throws exception for longitude below -180', function (): void {
@@ -24,13 +24,13 @@ it('throws exception for longitude above 180', function (): void {
 it('accepts longitude at -180 degrees', function (): void {
     $longitude = new Longitude(-180.0);
 
-    expect($longitude->value())->toBe(-180.0);
+    expect($longitude->value)->toBe(-180.0);
 });
 
 it('accepts longitude at 180 degrees', function (): void {
     $longitude = new Longitude(180.0);
 
-    expect($longitude->value())->toBe(180.0);
+    expect($longitude->value)->toBe(180.0);
 });
 
 it('is equal to another longitude with same value', function (): void {
@@ -62,13 +62,13 @@ it('converts to array', function (): void {
 it('creates from string', function (): void {
     $longitude = Longitude::fromString('-74.0060');
 
-    expect($longitude->value())->toBe(-74.0060);
+    expect($longitude->value)->toBe(-74.0060);
 });
 
 it('creates from float', function (): void {
     $longitude = Longitude::fromFloat(-74.0060);
 
-    expect($longitude->value())->toBe(-74.0060);
+    expect($longitude->value)->toBe(-74.0060);
 });
 
 it('throws exception when creating from invalid string', function (): void {
@@ -119,7 +119,7 @@ it('handles floating point precision correctly', function (float $input, float $
         expect(fn (): Longitude => new Longitude($input))->toThrow(InvalidLongitudeException::class);
     } else {
         $longitude = new Longitude($input);
-        expect($longitude->value())->toBe($expected);
+        expect($longitude->value)->toBe($expected);
     }
 })->with([
     [-180.0000000001, -180.0],
@@ -132,9 +132,9 @@ it('handles floating point precision correctly', function (float $input, float $
 it('validates longitude range with random values', function (): void {
     $validLongitude = 45.0; // Use a fixed valid value for now
     $longitude = new Longitude($validLongitude);
-    expect($longitude->value())->toBe($validLongitude)
-        ->and($longitude->value())->toBeGreaterThanOrEqual(-180.0)
-        ->and($longitude->value())->toBeLessThanOrEqual(180.0);
+    expect($longitude->value)->toBe($validLongitude)
+        ->and($longitude->value)->toBeGreaterThanOrEqual(-180.0)
+        ->and($longitude->value)->toBeLessThanOrEqual(180.0);
 });
 
 it('throws exception for values just outside valid range', function (float $invalidValue): void {
@@ -192,7 +192,7 @@ it('validates hemisphere detection with boundary values', function (float $value
 
 it('handles fromString with various valid formats', function (string $input, float $expected): void {
     $longitude = Longitude::fromString($input);
-    expect($longitude->value())->toBe($expected);
+    expect($longitude->value)->toBe($expected);
 })->with([
     ['0', 0.0],
     ['45.5', 45.5],

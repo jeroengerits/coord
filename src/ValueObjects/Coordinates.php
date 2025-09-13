@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Jeroengerits\Coord\ValueObjects;
+namespace JeroenGerits\Coord\ValueObjects;
 
-use Jeroengerits\Coord\Enums\DistanceUnit;
-use Jeroengerits\Coord\Exceptions\InvalidCoordinatesException;
-use Jeroengerits\Coord\Exceptions\InvalidLatitudeException;
-use Jeroengerits\Coord\Exceptions\InvalidLongitudeException;
-use Stringable;
+use JeroenGerits\Coord\Enums\DistanceUnit;
+use JeroenGerits\Coord\Exceptions\InvalidCoordinatesException;
+use JeroenGerits\Coord\Exceptions\InvalidLatitudeException;
+use JeroenGerits\Coord\Exceptions\InvalidLongitudeException;
+use JeroenGerits\Support\Contracts\ValueObject;
 
-final readonly class Coordinates implements Stringable
+final readonly class Coordinates implements ValueObject
 {
     /**
      * Create a new Coordinates instance.
@@ -170,8 +170,8 @@ final readonly class Coordinates implements Stringable
     public function toArray(): array
     {
         return [
-            'latitude' => $this->latitude->value(),
-            'longitude' => $this->longitude->value(),
+            'latitude' => $this->latitude->value,
+            'longitude' => $this->longitude->value,
         ];
     }
 
@@ -327,9 +327,9 @@ final readonly class Coordinates implements Stringable
     }
 
     /**
-     * Check if these coordinates equal another set of coordinates.
+     * Check if these coordinates equal another value object.
      *
-     * @param  Coordinates $coordinates The coordinates to compare with
+     * @param  ValueObject $other The value object to compare with
      * @return bool        True if both latitude and longitude are equal
      *
      * @example
@@ -337,9 +337,13 @@ final readonly class Coordinates implements Stringable
      * $coords2 = Coordinates::fromFloats(40.7128, -74.0060);
      * $coords1->equals($coords2); // true
      */
-    public function equals(Coordinates $coordinates): bool
+    public function equals(ValueObject $other): bool
     {
-        return $this->latitude->equals($coordinates->latitude) &&
-            $this->longitude->equals($coordinates->longitude);
+        if (! $other instanceof self) {
+            return false;
+        }
+
+        return $this->latitude->equals($other->latitude) &&
+            $this->longitude->equals($other->longitude);
     }
 }

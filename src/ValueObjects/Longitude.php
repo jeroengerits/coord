@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Jeroengerits\Coord\ValueObjects;
+namespace JeroenGerits\Coord\ValueObjects;
 
-use Jeroengerits\Coord\Exceptions\InvalidLongitudeException;
-use Stringable;
+use JeroenGerits\Coord\Exceptions\InvalidLongitudeException;
+use JeroenGerits\Support\Contracts\ValueObject;
 
-final readonly class Longitude implements Stringable
+final readonly class Longitude implements ValueObject
 {
     private const float MIN_LONGITUDE = -180.0;
 
@@ -25,7 +25,7 @@ final readonly class Longitude implements Stringable
      * $longitude = new Longitude(181.0);    // Throws InvalidLongitudeException
      */
     public function __construct(
-        private float $value
+        public float $value
     ) {
         if ($value < self::MIN_LONGITUDE || $value > self::MAX_LONGITUDE) {
             throw InvalidLongitudeException::outOfRange($value);
@@ -95,9 +95,13 @@ final readonly class Longitude implements Stringable
      * $lon2 = new Longitude(-74.0060);
      * $lon1->equals($lon2); // true
      */
-    public function equals(Longitude $longitude): bool
+    public function equals(ValueObject $other): bool
     {
-        return $this->value === $longitude->value;
+        if (! $other instanceof self) {
+            return false;
+        }
+
+        return $this->value === $other->value;
     }
 
     /**

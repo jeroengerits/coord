@@ -22,8 +22,15 @@
     }
   ],
   "require": {
-    "php": "^8.4"
+    "php": "^8.4",
+    "jeroengerits/support": "dev-main"
   },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/jeroengerits/support"
+    }
+  ],
   "require-dev": {
     "pestphp/pest": "^4.0",
     "rector/rector": "^2.0",
@@ -31,12 +38,12 @@
   },
   "autoload": {
     "psr-4": {
-      "Jeroengerits\\Coord\\": "src/"
+      "JeroenGerits\\Coord\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Jeroengerits\\Coord\\Tests\\": "tests/"
+      "JeroenGerits\\Coord\\Tests\\": "tests/"
     }
   },
   "config": {

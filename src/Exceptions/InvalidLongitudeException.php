@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Jeroengerits\Coord\Exceptions;
+namespace JeroenGerits\Coord\Exceptions;
 
 use InvalidArgumentException;
 

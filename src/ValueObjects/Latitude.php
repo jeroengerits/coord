@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Jeroengerits\Coord\ValueObjects;
+namespace JeroenGerits\Coord\ValueObjects;
 
-use Jeroengerits\Coord\Exceptions\InvalidLatitudeException;
-use Stringable;
+use JeroenGerits\Coord\Exceptions\InvalidLatitudeException;
+use JeroenGerits\Support\Contracts\ValueObject;
 
-final readonly class Latitude implements Stringable
+final readonly class Latitude implements ValueObject
 {
     private const float MIN_LATITUDE = -90.0;
 
@@ -25,7 +25,7 @@ final readonly class Latitude implements Stringable
      * $latitude = new Latitude(91.0);    // Throws InvalidLatitudeException
      */
     public function __construct(
-        private float $value
+        public float $value
     ) {
         if ($value < self::MIN_LATITUDE || $value > self::MAX_LATITUDE) {
             throw InvalidLatitudeException::outOfRange($value);
@@ -95,9 +95,13 @@ final readonly class Latitude implements Stringable
      * $lat2 = new Latitude(40.7128);
      * $lat1->equals($lat2); // true
      */
-    public function equals(Latitude $latitude): bool
+    public function equals(ValueObject $other): bool
     {
-        return $this->value === $latitude->value;
+        if (! $other instanceof self) {
+            return false;
+        }
+
+        return $this->value === $other->value;
     }
 
     /**

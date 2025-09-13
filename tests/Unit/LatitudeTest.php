@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-use Jeroengerits\Coord\Exceptions\InvalidLatitudeException;
-use Jeroengerits\Coord\ValueObjects\Latitude;
+use JeroenGerits\Coord\Exceptions\InvalidLatitudeException;
+use JeroenGerits\Coord\ValueObjects\Latitude;
 
 it('creates a valid latitude', function (): void {
     $latitude = new Latitude(40.7128);
 
-    expect($latitude->value())->toBe(40.7128);
+    expect($latitude->value)->toBe(40.7128);
 });
 
 it('throws exception for latitude below -90', function (): void {
@@ -24,13 +24,13 @@ it('throws exception for latitude above 90', function (): void {
 it('accepts latitude at -90 degrees', function (): void {
     $latitude = new Latitude(-90.0);
 
-    expect($latitude->value())->toBe(-90.0);
+    expect($latitude->value)->toBe(-90.0);
 });
 
 it('accepts latitude at 90 degrees', function (): void {
     $latitude = new Latitude(90.0);
 
-    expect($latitude->value())->toBe(90.0);
+    expect($latitude->value)->toBe(90.0);
 });
 
 it('is equal to another latitude with same value', function (): void {
@@ -62,13 +62,13 @@ it('converts to array', function (): void {
 it('creates from string', function (): void {
     $latitude = Latitude::fromString('40.7128');
 
-    expect($latitude->value())->toBe(40.7128);
+    expect($latitude->value)->toBe(40.7128);
 });
 
 it('creates from float', function (): void {
     $latitude = Latitude::fromFloat(40.7128);
 
-    expect($latitude->value())->toBe(40.7128);
+    expect($latitude->value)->toBe(40.7128);
 });
 
 it('throws exception when creating from invalid string', function (): void {
@@ -111,7 +111,7 @@ it('handles floating point precision correctly', function (float $input, float $
         expect(fn (): Latitude => new Latitude($input))->toThrow(InvalidLatitudeException::class);
     } else {
         $latitude = new Latitude($input);
-        expect($latitude->value())->toBe($expected);
+        expect($latitude->value)->toBe($expected);
     }
 })->with([
     [-90.0000000001, -90.0],
@@ -124,9 +124,9 @@ it('handles floating point precision correctly', function (float $input, float $
 it('validates latitude range with random values', function (): void {
     $validLatitude = 45.0; // Use a fixed valid value for now
     $latitude = new Latitude($validLatitude);
-    expect($latitude->value())->toBe($validLatitude)
-        ->and($latitude->value())->toBeGreaterThanOrEqual(-90.0)
-        ->and($latitude->value())->toBeLessThanOrEqual(90.0);
+    expect($latitude->value)->toBe($validLatitude)
+        ->and($latitude->value)->toBeGreaterThanOrEqual(-90.0)
+        ->and($latitude->value)->toBeLessThanOrEqual(90.0);
 });
 
 it('throws exception for values just outside valid range', function (float $invalidValue): void {

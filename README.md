@@ -16,7 +16,7 @@ Coordinates with distance calculations.
 ## Quick Start
 
 ```php
-use Jeroengerits\Coord\ValueObjects\Coordinates;
+use JeroenGerits\Coord\ValueObjects\Coordinates;
 
 // Create coordinates
 $coordinates = Coordinates::fromFloats(40.7128, -74.0060);
@@ -29,7 +29,7 @@ $coordinates = Coordinates::fromArray(['latitude' => 40.7128, 'longitude' => -74
 ### Latitude (-90° to +90°)
 
 ```php
-use Jeroengerits\Coord\ValueObjects\Latitude;
+use JeroenGerits\Coord\ValueObjects\Latitude;
 
 // Create from constructor
 $latitude = new Latitude(40.7128);
@@ -50,7 +50,7 @@ $latitude->toArray(); // ['latitude' => 40.7128]
 ### Longitude (-180° to +180°)
 
 ```php
-use Jeroengerits\Coord\ValueObjects\Longitude;
+use JeroenGerits\Coord\ValueObjects\Longitude;
 
 // Create from constructor
 $longitude = new Longitude(-74.0060);
@@ -71,7 +71,7 @@ $longitude->toArray(); // ['longitude' => -74.0060]
 ### Coordinates
 
 ```php
-use Jeroengerits\Coord\ValueObjects\Coordinates;
+use JeroenGerits\Coord\ValueObjects\Coordinates;
 
 $coordinates = new Coordinates($latitude, $longitude);
 
@@ -125,7 +125,7 @@ The library supports 11 different distance units for calculations:
 ### Usage Examples
 
 ```php
-use Jeroengerits\Coord\Enums\DistanceUnit;
+use JeroenGerits\Coord\Enums\DistanceUnit;
 
 $newYork = Coordinates::fromFloats(40.7128, -74.0060);
 $london = Coordinates::fromFloats(51.5074, -0.1278);
