@@ -9,6 +9,7 @@ use JeroenGerits\Coord\ValueObjects\Latitude;
 use JeroenGerits\Coord\ValueObjects\Longitude;
 
 it('creates coordinates with latitude and longitude', function (): void {
+
     $latitude = new Latitude(40.7128);
     $longitude = new Longitude(-74.0060);
     $coordinates = new Coordinates($latitude, $longitude);
