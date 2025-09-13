@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Jeroengerits\Coord\ValueObjects;
 
 use Jeroengerits\Coord\Exceptions\InvalidLongitudeException;
+use Stringable;
 
-final readonly class Longitude implements \Stringable
+final readonly class Longitude implements Stringable
 {
     private const float MIN_LONGITUDE = -180.0;
 

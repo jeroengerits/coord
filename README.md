@@ -82,6 +82,53 @@ $london = Coordinates::fromFloats(51.5074, -0.1278);
 $distance = $newYork->distanceTo($london); // ~5570.0 km
 ```
 
+## Distance Units
+
+The library supports 11 different distance units for calculations:
+
+### Metric Units
+
+- **Kilometers (km)** - Base unit
+- **Meters (m)** - 1,000 meters = 1 kilometer
+- **Decimeters (dm)** - 10,000 decimeters = 1 kilometer
+- **Centimeters (cm)** - 100,000 centimeters = 1 kilometer
+- **Millimeters (mm)** - 1,000,000 millimeters = 1 kilometer
+
+### Imperial Units
+
+- **Miles (mi)** - ~0.621 miles = 1 kilometer
+- **Yards (yd)** - ~1,094 yards = 1 kilometer
+- **Feet (ft)** - ~3,281 feet = 1 kilometer
+- **Inches (in)** - ~39,370 inches = 1 kilometer
+
+### Specialized Units
+
+- **Nautical Miles (nmi)** - ~0.540 nautical miles = 1 kilometer
+- **Light Years (ly)** - ~1.057e-13 light years = 1 kilometer
+
+### Usage Examples
+
+```php
+use Jeroengerits\Coord\Enums\DistanceUnit;
+
+$newYork = Coordinates::fromFloats(40.7128, -74.0060);
+$london = Coordinates::fromFloats(51.5074, -0.1278);
+
+// Different distance units
+$distanceKm = $newYork->distanceTo($london, DistanceUnit::KILOMETERS);
+$distanceMiles = $newYork->distanceTo($london, DistanceUnit::MILES);
+$distanceMeters = $newYork->distanceTo($london, DistanceUnit::METERS);
+$distanceFeet = $newYork->distanceTo($london, DistanceUnit::FEET);
+$distanceInches = $newYork->distanceTo($london, DistanceUnit::INCHES);
+$distanceLightYears = $newYork->distanceTo($london, DistanceUnit::LIGHT_YEARS);
+
+// Unit information
+$unit = DistanceUnit::MILES;
+$unit->getDisplayName(); // "miles"
+$unit->getAbbreviation(); // "mi"
+$unit->getConversionFactor(); // 0.621371
+```
+
 ## Geographic Analysis
 
 ```php

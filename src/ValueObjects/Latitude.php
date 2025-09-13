@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Jeroengerits\Coord\ValueObjects;
 
 use Jeroengerits\Coord\Exceptions\InvalidLatitudeException;
+use Stringable;
 
-final readonly class Latitude implements \Stringable
+final readonly class Latitude implements Stringable
 {
     private const float MIN_LATITUDE = -90.0;
 

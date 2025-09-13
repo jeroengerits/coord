@@ -8,8 +8,9 @@ use Jeroengerits\Coord\Enums\DistanceUnit;
 use Jeroengerits\Coord\Exceptions\InvalidCoordinatesException;
 use Jeroengerits\Coord\Exceptions\InvalidLatitudeException;
 use Jeroengerits\Coord\Exceptions\InvalidLongitudeException;
+use Stringable;
 
-final readonly class Coordinates implements \Stringable
+final readonly class Coordinates implements Stringable
 {
     /**
      * Create a new Coordinates instance.
