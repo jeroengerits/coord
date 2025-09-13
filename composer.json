@@ -1,0 +1,36 @@
+{
+    "name": "jeroengerits/coord",
+    "autoload": {
+        "psr-4": {
+            "Jeroengerits\\Coord\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Jeroen Gerits",
+            "email": "jeroen@gerits.email"
+        }
+    ],
+    "require": {
+        "php": "^8.4"
+    },
+    "require-dev": {
+        "pestphp/pest": "^4.0",
+        "rector/rector": "^2.0",
+        "laravel/pint": "^1.0"
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "scripts": {
+        "format": "pint",
+        "format:test": "pint --test",
+        "refactor": "rector",
+        "refactor:dry-run": "rector --dry-run",
+        "test": "pest",
+        "test:coverage": "pest --coverage",
+        "all": "pint && rector && pest"
+    }
+}
