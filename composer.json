@@ -1,36 +1,59 @@
 {
-    "name": "jeroengerits/coord",
-    "autoload": {
-        "psr-4": {
-            "Jeroengerits\\Coord\\": "src/"
-        }
-    },
-    "authors": [
-        {
-            "name": "Jeroen Gerits",
-            "email": "jeroen@gerits.email"
-        }
-    ],
-    "require": {
-        "php": "^8.4"
-    },
-    "require-dev": {
-        "pestphp/pest": "^4.0",
-        "rector/rector": "^2.0",
-        "laravel/pint": "^1.0"
-    },
-    "config": {
-        "allow-plugins": {
-            "pestphp/pest-plugin": true
-        }
-    },
-    "scripts": {
-        "format": "pint",
-        "format:test": "pint --test",
-        "refactor": "rector",
-        "refactor:dry-run": "rector --dry-run",
-        "test": "pest",
-        "test:coverage": "pest --coverage",
-        "all": "pint && rector && pest"
+  "name": "jeroengerits/coord",
+  "version": "0.0.1",
+  "description": "A PHP library for working with geographic coordinates, providing immutable value objects for Latitude, Longitude, and Coordinates with distance calculations and geographic analysis.",
+  "type": "library",
+  "keywords": [
+    "coordinates",
+    "latitude",
+    "longitude",
+    "geographic",
+    "distance",
+    "haversine",
+    "value-object",
+    "immutable"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/jeroengerits/coord",
+  "authors": [
+    {
+      "name": "Jeroen Gerits",
+      "email": "jeroen@gerits.email",
     }
+  ],
+  "require": {
+    "php": "^8.4"
+  },
+  "require-dev": {
+    "pestphp/pest": "^4.0",
+    "rector/rector": "^2.0",
+    "laravel/pint": "^1.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Jeroengerits\\Coord\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Jeroengerits\\Coord\\Tests\\": "tests/"
+    }
+  },
+  "config": {
+    "allow-plugins": {
+      "pestphp/pest-plugin": true
+    },
+    "sort-packages": true
+  },
+  "scripts": {
+    "format": "pint",
+    "format:test": "pint --test",
+    "refactor": "rector",
+    "refactor:dry-run": "rector --dry-run",
+    "test": "pest",
+    "test:coverage": "pest --coverage",
+    "all": "pint && rector && pest"
+  },
+  "minimum-stability": "stable",
+  "prefer-stable": true
 }
