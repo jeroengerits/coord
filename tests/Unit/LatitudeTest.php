@@ -12,12 +12,12 @@ it('creates a valid latitude', function (): void {
 });
 
 it('throws exception for latitude below -90', function (): void {
-    expect(fn (): \Jeroengerits\Coord\ValueObjects\Latitude => new Latitude(-91.0))
+    expect(fn (): Latitude => new Latitude(-91.0))
         ->toThrow(InvalidLatitudeException::class);
 });
 
 it('throws exception for latitude above 90', function (): void {
-    expect(fn (): \Jeroengerits\Coord\ValueObjects\Latitude => new Latitude(91.0))
+    expect(fn (): Latitude => new Latitude(91.0))
         ->toThrow(InvalidLatitudeException::class);
 });
 
@@ -65,8 +65,19 @@ it('creates from string', function (): void {
     expect($latitude->value())->toBe(40.7128);
 });
 
+it('creates from float', function (): void {
+    $latitude = Latitude::fromFloat(40.7128);
+
+    expect($latitude->value())->toBe(40.7128);
+});
+
 it('throws exception when creating from invalid string', function (): void {
-    expect(fn (): \Jeroengerits\Coord\ValueObjects\Latitude => Latitude::fromString('invalid'))
+    expect(fn (): Latitude => Latitude::fromString('invalid'))
+        ->toThrow(InvalidLatitudeException::class);
+});
+
+it('throws exception when creating from invalid float', function (): void {
+    expect(fn (): Latitude => Latitude::fromFloat(91.0))
         ->toThrow(InvalidLatitudeException::class);
 });
 
@@ -74,30 +85,30 @@ it('determines if latitude is in northern hemisphere', function (): void {
     $northernLatitude = new Latitude(40.7128);
     $southernLatitude = new Latitude(-40.7128);
 
-    expect($northernLatitude->isNorthern())->toBeTrue();
-    expect($southernLatitude->isNorthern())->toBeFalse();
+    expect($northernLatitude->isNorthern())->toBeTrue()
+        ->and($southernLatitude->isNorthern())->toBeFalse();
 });
 
 it('determines if latitude is in southern hemisphere', function (): void {
     $northernLatitude = new Latitude(40.7128);
     $southernLatitude = new Latitude(-40.7128);
 
-    expect($northernLatitude->isSouthern())->toBeFalse();
-    expect($southernLatitude->isSouthern())->toBeTrue();
+    expect($northernLatitude->isSouthern())->toBeFalse()
+        ->and($southernLatitude->isSouthern())->toBeTrue();
 });
 
 it('determines if latitude is at equator', function (): void {
     $equatorLatitude = new Latitude(0.0);
     $nonEquatorLatitude = new Latitude(40.7128);
 
-    expect($equatorLatitude->isEquator())->toBeTrue();
-    expect($nonEquatorLatitude->isEquator())->toBeFalse();
+    expect($equatorLatitude->isEquator())->toBeTrue()
+        ->and($nonEquatorLatitude->isEquator())->toBeFalse();
 });
 
 // Edge Cases and Advanced Tests
 it('handles floating point precision correctly', function (float $input, float $expected): void {
     if ($input < -90.0 || $input > 90.0) {
-        expect(fn (): \Jeroengerits\Coord\ValueObjects\Latitude => new Latitude($input))->toThrow(InvalidLatitudeException::class);
+        expect(fn (): Latitude => new Latitude($input))->toThrow(InvalidLatitudeException::class);
     } else {
         $latitude = new Latitude($input);
         expect($latitude->value())->toBe($expected);
@@ -113,13 +124,13 @@ it('handles floating point precision correctly', function (float $input, float $
 it('validates latitude range with random values', function (): void {
     $validLatitude = 45.0; // Use a fixed valid value for now
     $latitude = new Latitude($validLatitude);
-    expect($latitude->value())->toBe($validLatitude);
-    expect($latitude->value())->toBeGreaterThanOrEqual(-90.0);
-    expect($latitude->value())->toBeLessThanOrEqual(90.0);
+    expect($latitude->value())->toBe($validLatitude)
+        ->and($latitude->value())->toBeGreaterThanOrEqual(-90.0)
+        ->and($latitude->value())->toBeLessThanOrEqual(90.0);
 });
 
 it('throws exception for values just outside valid range', function (float $invalidValue): void {
-    expect(fn (): \Jeroengerits\Coord\ValueObjects\Latitude => new Latitude($invalidValue))
+    expect(fn (): Latitude => new Latitude($invalidValue))
         ->toThrow(InvalidLatitudeException::class);
 })->with([
     -90.0000001,
@@ -145,9 +156,9 @@ it('handles array conversion consistently', function (float $value): void {
     $latitude = new Latitude($value);
     $array = $latitude->toArray();
 
-    expect($array)->toHaveKey('latitude');
-    expect($array['latitude'])->toBe($value);
-    expect($array)->toHaveCount(1);
+    expect($array)->toHaveKey('latitude')
+        ->and($array['latitude'])->toBe($value)
+        ->and($array)->toHaveCount(1);
 })->with([
     0.0,
     45.0,
@@ -159,9 +170,9 @@ it('handles array conversion consistently', function (float $value): void {
 it('validates hemisphere detection with boundary values', function (float $value, bool $isNorthern, bool $isSouthern, bool $isEquator): void {
     $latitude = new Latitude($value);
 
-    expect($latitude->isNorthern())->toBe($isNorthern);
-    expect($latitude->isSouthern())->toBe($isSouthern);
-    expect($latitude->isEquator())->toBe($isEquator);
+    expect($latitude->isNorthern())->toBe($isNorthern)
+        ->and($latitude->isSouthern())->toBe($isSouthern)
+        ->and($latitude->isEquator())->toBe($isEquator);
 })->with([
     [0.0, false, false, true],
     [0.0000001, true, false, false],
@@ -184,7 +195,7 @@ it('handles fromString with various valid formats', function (string $input, flo
 ]);
 
 it('throws exception for invalid string formats', function (string $invalidInput): void {
-    expect(fn (): \Jeroengerits\Coord\ValueObjects\Latitude => Latitude::fromString($invalidInput))
+    expect(fn (): Latitude => Latitude::fromString($invalidInput))
         ->toThrow(InvalidLatitudeException::class);
 })->with([
     'invalid',
@@ -215,8 +226,8 @@ it('throws outOfRange exception with correct message', function (float $invalidV
         new Latitude($invalidValue);
         expect(false)->toBeTrue('Exception should have been thrown');
     } catch (InvalidLatitudeException $e) {
-        expect($e->getMessage())->toContain('Latitude must be between -90 and 90 degrees');
-        expect($e->getMessage())->toContain((string) $invalidValue);
+        expect($e->getMessage())->toContain('Latitude must be between -90 and 90 degrees')
+            ->and($e->getMessage())->toContain((string) $invalidValue);
     }
 })->with([
     -91.0,
@@ -230,8 +241,8 @@ it('throws invalidString exception with correct message', function (string $inva
         Latitude::fromString($invalidString);
         expect(false)->toBeTrue('Exception should have been thrown');
     } catch (InvalidLatitudeException $e) {
-        expect($e->getMessage())->toContain('Invalid latitude value');
-        expect($e->getMessage())->toContain($invalidString);
+        expect($e->getMessage())->toContain('Invalid latitude value')
+            ->and($e->getMessage())->toContain($invalidString);
     }
 })->with([
     'invalid',

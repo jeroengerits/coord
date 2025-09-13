@@ -54,6 +54,23 @@ final readonly class Latitude implements Stringable
     }
 
     /**
+     * Create a latitude from a float value.
+     *
+     * @param  float $value The latitude as a float
+     * @return self  New Latitude instance
+     *
+     * @throws InvalidLatitudeException When the value is out of range
+     *
+     * @example
+     * $latitude = Latitude::fromFloat(40.7128); // Valid
+     * $latitude = Latitude::fromFloat(91.0);    // Throws InvalidLatitudeException
+     */
+    public static function fromFloat(float $value): self
+    {
+        return new self($value);
+    }
+
+    /**
      * Get the latitude value.
      *
      * @return float The latitude value in decimal degrees

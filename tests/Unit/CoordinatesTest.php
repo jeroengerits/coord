@@ -13,15 +13,15 @@ it('creates coordinates with latitude and longitude', function (): void {
     $longitude = new Longitude(-74.0060);
     $coordinates = new Coordinates($latitude, $longitude);
 
-    expect($coordinates->latitude())->toBe($latitude);
-    expect($coordinates->longitude())->toBe($longitude);
+    expect($coordinates->latitude())->toBe($latitude)
+        ->and($coordinates->longitude())->toBe($longitude);
 });
 
 it('creates coordinates from float values', function (): void {
     $coordinates = Coordinates::fromFloats(40.7128, -74.0060);
 
-    expect($coordinates->latitude()->value())->toBe(40.7128);
-    expect($coordinates->longitude()->value())->toBe(-74.0060);
+    expect($coordinates->latitude()->value())->toBe(40.7128)
+        ->and($coordinates->longitude()->value())->toBe(-74.0060);
 });
 
 it('creates coordinates from array', function (): void {
@@ -30,46 +30,46 @@ it('creates coordinates from array', function (): void {
         'longitude' => -74.0060,
     ]);
 
-    expect($coordinates->latitude()->value())->toBe(40.7128);
-    expect($coordinates->longitude()->value())->toBe(-74.0060);
+    expect($coordinates->latitude()->value())->toBe(40.7128)
+        ->and($coordinates->longitude()->value())->toBe(-74.0060);
 });
 
 it('throws exception when creating from array with missing latitude', function (): void {
-    expect(fn (): \Jeroengerits\Coord\ValueObjects\Coordinates => Coordinates::fromArray(['longitude' => -74.0060]))
+    expect(fn (): Coordinates => Coordinates::fromArray(['longitude' => -74.0060]))
         ->toThrow(InvalidArgumentException::class, 'Array must contain both latitude and longitude keys');
 });
 
 it('throws exception when creating from array with missing longitude', function (): void {
-    expect(fn (): \Jeroengerits\Coord\ValueObjects\Coordinates => Coordinates::fromArray(['latitude' => 40.7128]))
+    expect(fn (): Coordinates => Coordinates::fromArray(['latitude' => 40.7128]))
         ->toThrow(InvalidArgumentException::class, 'Array must contain both latitude and longitude keys');
 });
 
 it('creates coordinates from string', function (): void {
     $coordinates = Coordinates::fromString('40.7128,-74.0060');
 
-    expect($coordinates->latitude()->value())->toBe(40.7128);
-    expect($coordinates->longitude()->value())->toBe(-74.0060);
+    expect($coordinates->latitude()->value())->toBe(40.7128)
+        ->and($coordinates->longitude()->value())->toBe(-74.0060);
 });
 
 it('creates coordinates from string with space after comma', function (): void {
     $coordinates = Coordinates::fromString('40.7128, -74.0060');
 
-    expect($coordinates->latitude()->value())->toBe(40.7128);
-    expect($coordinates->longitude()->value())->toBe(-74.0060);
+    expect($coordinates->latitude()->value())->toBe(40.7128)
+        ->and($coordinates->longitude()->value())->toBe(-74.0060);
 });
 
 it('throws exception when creating from invalid string format', function (): void {
-    expect(fn (): \Jeroengerits\Coord\ValueObjects\Coordinates => Coordinates::fromString('40.7128'))
+    expect(fn (): Coordinates => Coordinates::fromString('40.7128'))
         ->toThrow(InvalidArgumentException::class, 'Invalid coordinates format. Expected "latitude,longitude"');
 });
 
 it('throws exception when creating from string with invalid latitude', function (): void {
-    expect(fn (): \Jeroengerits\Coord\ValueObjects\Coordinates => Coordinates::fromString('91.0,-74.0060'))
+    expect(fn (): Coordinates => Coordinates::fromString('91.0,-74.0060'))
         ->toThrow(InvalidArgumentException::class, 'Latitude must be between -90 and 90 degrees');
 });
 
 it('throws exception when creating from string with invalid longitude', function (): void {
-    expect(fn (): \Jeroengerits\Coord\ValueObjects\Coordinates => Coordinates::fromString('40.7128,181.0'))
+    expect(fn (): Coordinates => Coordinates::fromString('40.7128,181.0'))
         ->toThrow(InvalidArgumentException::class, 'Longitude must be between -180 and 180 degrees');
 });
 
@@ -113,64 +113,64 @@ it('determines if coordinates are in northern hemisphere', function (): void {
     $northernCoordinates = new Coordinates(new Latitude(40.7128), new Longitude(-74.0060));
     $southernCoordinates = new Coordinates(new Latitude(-40.7128), new Longitude(-74.0060));
 
-    expect($northernCoordinates->isNorthern())->toBeTrue();
-    expect($southernCoordinates->isNorthern())->toBeFalse();
+    expect($northernCoordinates->isNorthern())->toBeTrue()
+        ->and($southernCoordinates->isNorthern())->toBeFalse();
 });
 
 it('determines if coordinates are in southern hemisphere', function (): void {
     $northernCoordinates = new Coordinates(new Latitude(40.7128), new Longitude(-74.0060));
     $southernCoordinates = new Coordinates(new Latitude(-40.7128), new Longitude(-74.0060));
 
-    expect($northernCoordinates->isSouthern())->toBeFalse();
-    expect($southernCoordinates->isSouthern())->toBeTrue();
+    expect($northernCoordinates->isSouthern())->toBeFalse()
+        ->and($southernCoordinates->isSouthern())->toBeTrue();
 });
 
 it('determines if coordinates are in eastern hemisphere', function (): void {
     $easternCoordinates = new Coordinates(new Latitude(40.7128), new Longitude(120.0));
     $westernCoordinates = new Coordinates(new Latitude(40.7128), new Longitude(-120.0));
 
-    expect($easternCoordinates->isEastern())->toBeTrue();
-    expect($westernCoordinates->isEastern())->toBeFalse();
+    expect($easternCoordinates->isEastern())->toBeTrue()
+        ->and($westernCoordinates->isEastern())->toBeFalse();
 });
 
 it('determines if coordinates are in western hemisphere', function (): void {
     $easternCoordinates = new Coordinates(new Latitude(40.7128), new Longitude(120.0));
     $westernCoordinates = new Coordinates(new Latitude(40.7128), new Longitude(-120.0));
 
-    expect($easternCoordinates->isWestern())->toBeFalse();
-    expect($westernCoordinates->isWestern())->toBeTrue();
+    expect($easternCoordinates->isWestern())->toBeFalse()
+        ->and($westernCoordinates->isWestern())->toBeTrue();
 });
 
 it('determines if coordinates are at equator', function (): void {
     $equatorCoordinates = new Coordinates(new Latitude(0.0), new Longitude(-74.0060));
     $nonEquatorCoordinates = new Coordinates(new Latitude(40.7128), new Longitude(-74.0060));
 
-    expect($equatorCoordinates->isEquator())->toBeTrue();
-    expect($nonEquatorCoordinates->isEquator())->toBeFalse();
+    expect($equatorCoordinates->isEquator())->toBeTrue()
+        ->and($nonEquatorCoordinates->isEquator())->toBeFalse();
 });
 
 it('determines if coordinates are at prime meridian', function (): void {
     $primeMeridianCoordinates = new Coordinates(new Latitude(40.7128), new Longitude(0.0));
     $nonPrimeMeridianCoordinates = new Coordinates(new Latitude(40.7128), new Longitude(-74.0060));
 
-    expect($primeMeridianCoordinates->isPrimeMeridian())->toBeTrue();
-    expect($nonPrimeMeridianCoordinates->isPrimeMeridian())->toBeFalse();
+    expect($primeMeridianCoordinates->isPrimeMeridian())->toBeTrue()
+        ->and($nonPrimeMeridianCoordinates->isPrimeMeridian())->toBeFalse();
 });
 
 it('determines if coordinates are at international date line', function (): void {
     $dateLineCoordinates = new Coordinates(new Latitude(40.7128), new Longitude(180.0));
     $nonDateLineCoordinates = new Coordinates(new Latitude(40.7128), new Longitude(-74.0060));
 
-    expect($dateLineCoordinates->isInternationalDateLine())->toBeTrue();
-    expect($nonDateLineCoordinates->isInternationalDateLine())->toBeFalse();
+    expect($dateLineCoordinates->isInternationalDateLine())->toBeTrue()
+        ->and($nonDateLineCoordinates->isInternationalDateLine())->toBeFalse();
 });
 
 it('determines if coordinates are at Greenwich meridian', function (): void {
     $greenwichCoordinates = new Coordinates(new Latitude(51.4769), new Longitude(0.0));
     $nonGreenwichCoordinates = new Coordinates(new Latitude(40.7128), new Longitude(-74.0060));
 
-    expect($greenwichCoordinates->isGreenwichMeridian())->toBeTrue();
-    expect($nonGreenwichCoordinates->isGreenwichMeridian())->toBeFalse();
+    expect($greenwichCoordinates->isGreenwichMeridian())->toBeTrue()
+        ->and($nonGreenwichCoordinates->isGreenwichMeridian())->toBeFalse();
 });
 
 it('calculates distance to another coordinates', function (): void {
@@ -179,8 +179,8 @@ it('calculates distance to another coordinates', function (): void {
 
     $distance = $coordinates1->distanceTo($coordinates2);
 
-    expect($distance)->toBeGreaterThan(5500); // Approximately 5570 km
-    expect($distance)->toBeLessThan(5600);
+    expect($distance)->toBeGreaterThan(5500)
+        ->and($distance)->toBeLessThan(5600); // Approximately 5570 km
 });
 
 it('calculates distance to same coordinates as zero', function (): void {
@@ -200,9 +200,9 @@ it('calculates distance between major cities correctly', function (): void {
     $nyToTokyo = $newYork->distanceTo($tokyo);
     $nyToSydney = $newYork->distanceTo($sydney);
 
-    expect($nyToLondon)->toBeGreaterThan(5500)->toBeLessThan(5600);
-    expect($nyToTokyo)->toBeGreaterThan(10800)->toBeLessThan(10900);
-    expect($nyToSydney)->toBeGreaterThan(15900)->toBeLessThan(16000);
+    expect($nyToLondon)->toBeGreaterThan(5500)->toBeLessThan(5600)
+        ->and($nyToTokyo)->toBeGreaterThan(10800)->toBeLessThan(10900)
+        ->and($nyToSydney)->toBeGreaterThan(15900)->toBeLessThan(16000);
 });
 
 it('calculates distance in different units', function (): void {
@@ -214,10 +214,10 @@ it('calculates distance in different units', function (): void {
     $distanceNautical = $newYork->distanceTo($london, DistanceUnit::NAUTICAL_MILES);
     $distanceMeters = $newYork->distanceTo($london, DistanceUnit::METERS);
 
-    expect($distanceKm)->toBeGreaterThan(5500)->toBeLessThan(5600);
-    expect($distanceMiles)->toBeGreaterThan(3400)->toBeLessThan(3500);
-    expect($distanceNautical)->toBeGreaterThan(3000)->toBeLessThan(3100);
-    expect($distanceMeters)->toBeGreaterThan(5500000)->toBeLessThan(5600000);
+    expect($distanceKm)->toBeGreaterThan(5500)->toBeLessThan(5600)
+        ->and($distanceMiles)->toBeGreaterThan(3400)->toBeLessThan(3500)
+        ->and($distanceNautical)->toBeGreaterThan(3000)->toBeLessThan(3100)
+        ->and($distanceMeters)->toBeGreaterThan(5500000)->toBeLessThan(5600000);
 });
 
 it('calculates distance efficiently', function (): void {
@@ -253,19 +253,19 @@ it('handles coordinates near the poles', function (): void {
     $poleToEquator = $northPole->distanceTo($equator);
 
     // Distance from pole to pole should be approximately half the Earth's circumference
-    expect($poleToPole)->toBeGreaterThan(20000)->toBeLessThan(20050);
+    expect($poleToPole)->toBeGreaterThan(20000)->toBeLessThan(20050)
+        ->and($poleToEquator)->toBeGreaterThan(10000)->toBeLessThan(10025);
 
     // Distance from pole to equator should be approximately quarter the Earth's circumference
-    expect($poleToEquator)->toBeGreaterThan(10000)->toBeLessThan(10025);
 });
 
 it('validates distance unit conversion factors', function (): void {
     $unit = DistanceUnit::MILES;
     $factor = $unit->getConversionFactor();
 
-    expect($factor)->toBeGreaterThan(0.6)->toBeLessThan(0.7);
-    expect($unit->getDisplayName())->toBe('miles');
-    expect($unit->getAbbreviation())->toBe('mi');
+    expect($factor)->toBeGreaterThan(0.6)->toBeLessThan(0.7)
+        ->and($unit->getDisplayName())->toBe('miles')
+        ->and($unit->getAbbreviation())->toBe('mi');
 });
 
 it('handles very short distances accurately', function (): void {
@@ -298,8 +298,8 @@ it('throws invalidStringFormat exception with correct message', function (string
         Coordinates::fromString($invalidString);
         expect(false)->toBeTrue('Exception should have been thrown');
     } catch (InvalidCoordinatesException $e) {
-        expect($e->getMessage())->toContain('Invalid coordinates format');
-        expect($e->getMessage())->toContain('Expected "latitude,longitude"');
+        expect($e->getMessage())->toContain('Invalid coordinates format')
+            ->and($e->getMessage())->toContain('Expected "latitude,longitude"');
     }
 })->with([
     '40.7128',

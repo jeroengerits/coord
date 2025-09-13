@@ -12,12 +12,12 @@ it('creates a valid longitude', function (): void {
 });
 
 it('throws exception for longitude below -180', function (): void {
-    expect(fn (): \Jeroengerits\Coord\ValueObjects\Longitude => new Longitude(-181.0))
+    expect(fn (): Longitude => new Longitude(-181.0))
         ->toThrow(InvalidLongitudeException::class);
 });
 
 it('throws exception for longitude above 180', function (): void {
-    expect(fn (): \Jeroengerits\Coord\ValueObjects\Longitude => new Longitude(181.0))
+    expect(fn (): Longitude => new Longitude(181.0))
         ->toThrow(InvalidLongitudeException::class);
 });
 
@@ -65,8 +65,19 @@ it('creates from string', function (): void {
     expect($longitude->value())->toBe(-74.0060);
 });
 
+it('creates from float', function (): void {
+    $longitude = Longitude::fromFloat(-74.0060);
+
+    expect($longitude->value())->toBe(-74.0060);
+});
+
 it('throws exception when creating from invalid string', function (): void {
-    expect(fn (): \Jeroengerits\Coord\ValueObjects\Longitude => Longitude::fromString('invalid'))
+    expect(fn (): Longitude => Longitude::fromString('invalid'))
+        ->toThrow(InvalidLongitudeException::class);
+});
+
+it('throws exception when creating from invalid float', function (): void {
+    expect(fn (): Longitude => Longitude::fromFloat(181.0))
         ->toThrow(InvalidLongitudeException::class);
 });
 
@@ -74,38 +85,38 @@ it('determines if longitude is in eastern hemisphere', function (): void {
     $easternLongitude = new Longitude(120.0);
     $westernLongitude = new Longitude(-120.0);
 
-    expect($easternLongitude->isEastern())->toBeTrue();
-    expect($westernLongitude->isEastern())->toBeFalse();
+    expect($easternLongitude->isEastern())->toBeTrue()
+        ->and($westernLongitude->isEastern())->toBeFalse();
 });
 
 it('determines if longitude is in western hemisphere', function (): void {
     $easternLongitude = new Longitude(120.0);
     $westernLongitude = new Longitude(-120.0);
 
-    expect($easternLongitude->isWestern())->toBeFalse();
-    expect($westernLongitude->isWestern())->toBeTrue();
+    expect($easternLongitude->isWestern())->toBeFalse()
+        ->and($westernLongitude->isWestern())->toBeTrue();
 });
 
 it('determines if longitude is at prime meridian', function (): void {
     $primeMeridianLongitude = new Longitude(0.0);
     $nonPrimeMeridianLongitude = new Longitude(-74.0060);
 
-    expect($primeMeridianLongitude->isPrimeMeridian())->toBeTrue();
-    expect($nonPrimeMeridianLongitude->isPrimeMeridian())->toBeFalse();
+    expect($primeMeridianLongitude->isPrimeMeridian())->toBeTrue()
+        ->and($nonPrimeMeridianLongitude->isPrimeMeridian())->toBeFalse();
 });
 
 it('determines if longitude is at international date line', function (): void {
     $dateLineLongitude = new Longitude(180.0);
     $nonDateLineLongitude = new Longitude(-74.0060);
 
-    expect($dateLineLongitude->isInternationalDateLine())->toBeTrue();
-    expect($nonDateLineLongitude->isInternationalDateLine())->toBeFalse();
+    expect($dateLineLongitude->isInternationalDateLine())->toBeTrue()
+        ->and($nonDateLineLongitude->isInternationalDateLine())->toBeFalse();
 });
 
 // Edge Cases and Advanced Tests
 it('handles floating point precision correctly', function (float $input, float $expected): void {
     if ($input < -180.0 || $input > 180.0) {
-        expect(fn (): \Jeroengerits\Coord\ValueObjects\Longitude => new Longitude($input))->toThrow(InvalidLongitudeException::class);
+        expect(fn (): Longitude => new Longitude($input))->toThrow(InvalidLongitudeException::class);
     } else {
         $longitude = new Longitude($input);
         expect($longitude->value())->toBe($expected);
@@ -121,13 +132,13 @@ it('handles floating point precision correctly', function (float $input, float $
 it('validates longitude range with random values', function (): void {
     $validLongitude = 45.0; // Use a fixed valid value for now
     $longitude = new Longitude($validLongitude);
-    expect($longitude->value())->toBe($validLongitude);
-    expect($longitude->value())->toBeGreaterThanOrEqual(-180.0);
-    expect($longitude->value())->toBeLessThanOrEqual(180.0);
+    expect($longitude->value())->toBe($validLongitude)
+        ->and($longitude->value())->toBeGreaterThanOrEqual(-180.0)
+        ->and($longitude->value())->toBeLessThanOrEqual(180.0);
 });
 
 it('throws exception for values just outside valid range', function (float $invalidValue): void {
-    expect(fn (): \Jeroengerits\Coord\ValueObjects\Longitude => new Longitude($invalidValue))
+    expect(fn (): Longitude => new Longitude($invalidValue))
         ->toThrow(InvalidLongitudeException::class);
 })->with([
     -180.0000001,
@@ -153,9 +164,9 @@ it('handles array conversion consistently', function (float $value): void {
     $longitude = new Longitude($value);
     $array = $longitude->toArray();
 
-    expect($array)->toHaveKey('longitude');
-    expect($array['longitude'])->toBe($value);
-    expect($array)->toHaveCount(1);
+    expect($array)->toHaveKey('longitude')
+        ->and($array['longitude'])->toBe($value)
+        ->and($array)->toHaveCount(1);
 })->with([
     0.0,
     45.0,
@@ -167,10 +178,10 @@ it('handles array conversion consistently', function (float $value): void {
 it('validates hemisphere detection with boundary values', function (float $value, bool $isEastern, bool $isWestern, bool $isPrimeMeridian, bool $isDateLine): void {
     $longitude = new Longitude($value);
 
-    expect($longitude->isEastern())->toBe($isEastern);
-    expect($longitude->isWestern())->toBe($isWestern);
-    expect($longitude->isPrimeMeridian())->toBe($isPrimeMeridian);
-    expect($longitude->isInternationalDateLine())->toBe($isDateLine);
+    expect($longitude->isEastern())->toBe($isEastern)
+        ->and($longitude->isWestern())->toBe($isWestern)
+        ->and($longitude->isPrimeMeridian())->toBe($isPrimeMeridian)
+        ->and($longitude->isInternationalDateLine())->toBe($isDateLine);
 })->with([
     [0.0, false, false, true, false],
     [0.0000001, true, false, false, false],
@@ -193,7 +204,7 @@ it('handles fromString with various valid formats', function (string $input, flo
 ]);
 
 it('throws exception for invalid string formats', function (string $invalidInput): void {
-    expect(fn (): \Jeroengerits\Coord\ValueObjects\Longitude => Longitude::fromString($invalidInput))
+    expect(fn (): Longitude => Longitude::fromString($invalidInput))
         ->toThrow(InvalidLongitudeException::class);
 })->with([
     'invalid',
@@ -224,8 +235,8 @@ it('throws outOfRange exception with correct message', function (float $invalidV
         new Longitude($invalidValue);
         expect(false)->toBeTrue('Exception should have been thrown');
     } catch (InvalidLongitudeException $e) {
-        expect($e->getMessage())->toContain('Longitude must be between -180 and 180 degrees');
-        expect($e->getMessage())->toContain((string) $invalidValue);
+        expect($e->getMessage())->toContain('Longitude must be between -180 and 180 degrees')
+            ->and($e->getMessage())->toContain((string) $invalidValue);
     }
 })->with([
     -181.0,
@@ -239,8 +250,8 @@ it('throws invalidString exception with correct message', function (string $inva
         Longitude::fromString($invalidString);
         expect(false)->toBeTrue('Exception should have been thrown');
     } catch (InvalidLongitudeException $e) {
-        expect($e->getMessage())->toContain('Invalid longitude value');
-        expect($e->getMessage())->toContain($invalidString);
+        expect($e->getMessage())->toContain('Invalid longitude value')
+            ->and($e->getMessage())->toContain($invalidString);
     }
 })->with([
     'invalid',

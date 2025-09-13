@@ -31,7 +31,15 @@ $coordinates = Coordinates::fromArray(['latitude' => 40.7128, 'longitude' => -74
 ```php
 use Jeroengerits\Coord\ValueObjects\Latitude;
 
+// Create from constructor
 $latitude = new Latitude(40.7128);
+
+// Create from float
+$latitude = Latitude::fromFloat(40.7128);
+
+// Create from string
+$latitude = Latitude::fromString('40.7128');
+
 $latitude->value(); // 40.7128
 $latitude->isNorthern(); // true
 $latitude->isEquator(); // false
@@ -44,7 +52,15 @@ $latitude->toArray(); // ['latitude' => 40.7128]
 ```php
 use Jeroengerits\Coord\ValueObjects\Longitude;
 
+// Create from constructor
 $longitude = new Longitude(-74.0060);
+
+// Create from float
+$longitude = Longitude::fromFloat(-74.0060);
+
+// Create from string
+$longitude = Longitude::fromString('-74.0060');
+
 $longitude->value(); // -74.0060
 $longitude->isWestern(); // true
 $longitude->isPrimeMeridian(); // false

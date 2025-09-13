@@ -54,6 +54,23 @@ final readonly class Longitude implements Stringable
     }
 
     /**
+     * Create a longitude from a float value.
+     *
+     * @param  float $value The longitude as a float
+     * @return self  New Longitude instance
+     *
+     * @throws InvalidLongitudeException When the value is out of range
+     *
+     * @example
+     * $longitude = Longitude::fromFloat(-74.0060); // Valid
+     * $longitude = Longitude::fromFloat(181.0);    // Throws InvalidLongitudeException
+     */
+    public static function fromFloat(float $value): self
+    {
+        return new self($value);
+    }
+
+    /**
      * Get the longitude value.
      *
      * @return float The longitude value in decimal degrees
