@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jeroengerits/support.git",
-                "reference": "cd014880e0942356756fbec1773c191e123c3328"
+                "reference": "baaf5371472eabad1c87a4241a90ca251acd1b60"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jeroengerits/support/zipball/cd014880e0942356756fbec1773c191e123c3328",
-                "reference": "cd014880e0942356756fbec1773c191e123c3328",
+                "url": "https://api.github.com/repos/jeroengerits/support/zipball/baaf5371472eabad1c87a4241a90ca251acd1b60",
+                "reference": "baaf5371472eabad1c87a4241a90ca251acd1b60",
                 "shasum": ""
             },
             "require": {
@@ -83,7 +83,7 @@
                 "source": "https://github.com/jeroengerits/support/tree/main",
                 "issues": "https://github.com/jeroengerits/support/issues"
             },
-            "time": "2025-09-13T14:13:26+00:00"
+            "time": "2025-09-13T14:14:33+00:00"
         }
     ],
     "packages-dev": [
